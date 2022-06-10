@@ -2,10 +2,12 @@ package com.spring.crud.demo;
 
 import java.util.List;
 
-import com.spring.crud.demo.model.SuperHero;
-import com.spring.crud.demo.model.emp.Employee;
-import com.spring.crud.demo.repository.EmployeeRepository;
-import com.spring.crud.demo.repository.SuperHeroRepository;
+import com.spring.crud.demo.models.Branch;
+import com.spring.crud.demo.models.Price;
+import com.spring.crud.demo.models.Vehicle;
+import com.spring.crud.demo.service.BranchService;
+import com.spring.crud.demo.service.PriceService;
+import com.spring.crud.demo.service.VehicleService;
 import com.spring.crud.demo.utils.HelperUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SpringBootH2CRUDApplication {
 
     @Autowired
-    private SuperHeroRepository superHeroRepository;
+    private BranchService branchService;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private VehicleService vehicleService;
+    @Autowired
+    private PriceService priceService;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootH2CRUDApplication.class, args);
@@ -36,23 +40,42 @@ public class SpringBootH2CRUDApplication {
     CommandLineRunner runner() {
         return args -> {
 
-            List<SuperHero> superHeroes = superHeroRepository.findAll();
-            if (superHeroes.isEmpty()) {
-                log.info("******* Inserting Super heroes to DB *******");
-                superHeroRepository.saveAll(HelperUtil.superHeroesSupplier.get());
+            List<Branch> branches = branchService.findAll();
+            if (branches.isEmpty()) {
+                log.info("******* Inserting branches to DB *******");
+                for (Branch branch : HelperUtil.branchesSupplier.get()) {
+                    branchService.save(branch);
+                }
             } else {
-                log.info("******* Super heroes stored in DB Size :: {}", superHeroes.size());
-                log.info("******* Super heroes stored in DB :: {}", superHeroes);
+                log.info("******* Branches stored in DB Size :: {}", branches.size());
+                log.info("******* Branches stored in DB :: {}", branches);
             }
 
+            Thread.sleep(2000);
+            List<Branch> branchesUpdated = branchService.findAll();
+            log.info("******* Branches stored in DB :: {}", branchesUpdated);
+            int branchId = branchesUpdated.get(0).getId();
 
-            List<Employee> employees = employeeRepository.findAll();
-            if (employees.isEmpty()) {
-                log.info("******* Inserting Employees to DB *******");
-                employeeRepository.saveAll(HelperUtil.employeeSupplier.get());
+            List<Vehicle> vehicles = vehicleService.findAll();
+            if (vehicles.isEmpty()) {
+                log.info("******* Inserting vehicles to DB *******");
+                for (Vehicle vehicle : HelperUtil.vehicleSupplier.get()) {
+                    vehicleService.save(new Vehicle(vehicle.getVehicleNumber(), vehicle.getType(), branchId));
+                }
             } else {
-                log.info("******* Employees stored in DB Size :: {}", employees.size());
-                log.info("******* Employees stored in DB :: {}", employees);
+                log.info("******* Vehicles stored in DB Size :: {}", vehicles.size());
+                log.info("******* Vehicles stored in DB :: {}", vehicles);
+            }
+
+            List<Price> prices = priceService.findAll();
+            if (prices.isEmpty()) {
+                log.info("******* Inserting prices to DB *******");
+                for (Price price : HelperUtil.priceSupplier.get()) {
+                    priceService.save(new Price(price.getType(), branchId, price.getPrice()));
+                }
+            } else {
+                log.info("******* Prices stored in DB Size :: {}", prices.size());
+                log.info("******* Prices stored in DB :: {}", prices);
             }
         };
     }

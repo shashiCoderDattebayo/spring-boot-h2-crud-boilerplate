@@ -3,9 +3,10 @@ package com.spring.crud.demo.aop;
 
 import java.util.Objects;
 
-import com.spring.crud.demo.model.Student;
-import com.spring.crud.demo.model.SuperHero;
-import com.spring.crud.demo.model.emp.Employee;
+import com.spring.crud.demo.models.Booking;
+import com.spring.crud.demo.models.Branch;
+import com.spring.crud.demo.models.Price;
+import com.spring.crud.demo.models.Vehicle;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -25,15 +26,18 @@ public class LoggerAspect {
     public void logSuperHeroBefore(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
-            if (arg instanceof SuperHero) {
-                SuperHero superHero = (SuperHero) arg;
-                log.info("******* Super hero before :: {}", superHero);
-            } else if (arg instanceof Employee) {
-                Employee employee = (Employee) arg;
-                log.info("******* Employee before :: {}", employee);
-            } else if (arg instanceof Student) {
-                Student student = (Student) arg;
-                log.info("******* Student before :: {}", student);
+            if (arg instanceof Booking) {
+                Booking booking = (Booking) arg;
+                log.info("******* Booking before :: {}", booking);
+            } else if (arg instanceof Branch) {
+                Branch branch = (Branch) arg;
+                log.info("******* Branch before :: {}", branch);
+            } else if (arg instanceof Price) {
+                Price price = (Price) arg;
+                log.info("******* Price before :: {}", price);
+            } else if (arg instanceof Vehicle) {
+                Vehicle vehicle = (Vehicle) arg;
+                log.info("******* Vehicle before :: {}", vehicle);
             }
         }
     }
