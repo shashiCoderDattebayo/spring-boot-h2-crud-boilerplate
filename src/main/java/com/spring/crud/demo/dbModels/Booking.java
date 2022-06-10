@@ -21,7 +21,7 @@ public class Booking {
     @GeneratedValue
     private int id;
 
-    private String vehicleId;
+    private int vehicleId;
     private String startTime;
     private String endTime;
 }

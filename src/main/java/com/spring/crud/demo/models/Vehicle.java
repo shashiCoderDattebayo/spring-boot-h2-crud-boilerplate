@@ -12,12 +12,18 @@ public class Vehicle {
     private final int id;
     private final String vehicleNumber;
     private final Type type;
+    private final int branchId;
 
-    public Vehicle(int id, String vehicleNumber, Type type) {
+    private Vehicle(int id, String vehicleNumber, Type type, int branchId) {
         validate(id, vehicleNumber, type);
         this.id = id;
         this.vehicleNumber = vehicleNumber;
         this.type = type;
+        this.branchId = branchId;
+    }
+
+    public Vehicle(String vehicleNumber, Type type, int branchId) {
+        this(-1, vehicleNumber, type, branchId);
     }
 
     private void validate(int id, String vehicleNumber, Type type) {
@@ -25,11 +31,11 @@ public class Vehicle {
     }
 
     public Vehicle(com.spring.crud.demo.dbModels.Vehicle vehicle) {
-        this(vehicle.getId(), vehicle.getVehicleNumber(), vehicle.getType());
+        this(vehicle.getId(), vehicle.getVehicleNumber(), vehicle.getType(), vehicle.getBranchId());
     }
 
     public com.spring.crud.demo.dbModels.Vehicle toDbObject() {
-        return com.spring.crud.demo.dbModels.Vehicle.builder().vehicleNumber(vehicleNumber).type(type).build();
+        return com.spring.crud.demo.dbModels.Vehicle.builder().vehicleNumber(vehicleNumber).branchId(branchId).type(type).build();
     }
 
     @Override

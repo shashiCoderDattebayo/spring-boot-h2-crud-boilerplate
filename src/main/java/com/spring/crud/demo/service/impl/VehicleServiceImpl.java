@@ -3,8 +3,11 @@ package com.spring.crud.demo.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.spring.crud.demo.models.Branch;
 import com.spring.crud.demo.models.Vehicle;
+import com.spring.crud.demo.repository.BranchRepository;
 import com.spring.crud.demo.repository.VehicleRepository;
+import com.spring.crud.demo.service.BranchService;
 import com.spring.crud.demo.service.VehicleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     private VehicleRepository repository;
+    @Autowired
+    private BranchService branchService;
 
     @Override
     public List<Vehicle> findAll() {
@@ -30,8 +35,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle save(Vehicle vehicle) {
-        com.spring.crud.demo.dbModels.Vehicle dbVehicle = repository.save(vehicle.toDbObject());
-        return new Vehicle(repository.save(dbVehicle));
+        branchService.findById(vehicle.getBranchId());
+        return new Vehicle(repository.save(vehicle.toDbObject()));
     }
 
     @Override

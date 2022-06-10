@@ -37,7 +37,7 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public Branch save(Branch branch) {
         log.info("save request " + branch);
-        com.spring.crud.demo.dbModels.Branch dbBranch = repository.save(branch.toDbObject());
+        com.spring.crud.demo.dbModels.Branch dbBranch = branch.toDbObject();
         log.info("save dbbranch " + dbBranch);
         com.spring.crud.demo.dbModels.Branch savedBranch = repository.save(dbBranch);
         log.info("saved dbbranch " + savedBranch);

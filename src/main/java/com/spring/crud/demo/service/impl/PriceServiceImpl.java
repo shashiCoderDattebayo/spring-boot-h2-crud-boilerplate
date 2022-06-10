@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.spring.crud.demo.models.Price;
 import com.spring.crud.demo.repository.PriceRepository;
+import com.spring.crud.demo.service.BranchService;
 import com.spring.crud.demo.service.PriceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class PriceServiceImpl implements PriceService {
 
     @Autowired
     private PriceRepository repository;
+    @Autowired
+    private BranchService branchService;
 
     @Override
     public List<Price> findAll() {
@@ -30,8 +33,8 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price save(Price price) {
-        com.spring.crud.demo.dbModels.Price dbPrice = repository.save(price.toDbObject());
-        return new Price(repository.save(dbPrice));
+        branchService.findById(price.getBranchId());
+        return new Price(repository.save(price.toDbObject()));
     }
 
     @Override

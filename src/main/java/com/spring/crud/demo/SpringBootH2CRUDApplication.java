@@ -51,11 +51,16 @@ public class SpringBootH2CRUDApplication {
                 log.info("******* Branches stored in DB :: {}", branches);
             }
 
+            Thread.sleep(2000);
+            List<Branch> branchesUpdated = branchService.findAll();
+            log.info("******* Branches stored in DB :: {}", branchesUpdated);
+            int branchId = branchesUpdated.get(0).getId();
+
             List<Vehicle> vehicles = vehicleService.findAll();
             if (vehicles.isEmpty()) {
                 log.info("******* Inserting vehicles to DB *******");
                 for (Vehicle vehicle : HelperUtil.vehicleSupplier.get()) {
-                    vehicleService.save(vehicle);
+                    vehicleService.save(new Vehicle(vehicle.getVehicleNumber(), vehicle.getType(), branchId));
                 }
             } else {
                 log.info("******* Vehicles stored in DB Size :: {}", vehicles.size());
@@ -66,7 +71,7 @@ public class SpringBootH2CRUDApplication {
             if (prices.isEmpty()) {
                 log.info("******* Inserting prices to DB *******");
                 for (Price price : HelperUtil.priceSupplier.get()) {
-                    priceService.save(price);
+                    priceService.save(new Price(price.getType(), branchId, price.getPrice()));
                 }
             } else {
                 log.info("******* Prices stored in DB Size :: {}", prices.size());

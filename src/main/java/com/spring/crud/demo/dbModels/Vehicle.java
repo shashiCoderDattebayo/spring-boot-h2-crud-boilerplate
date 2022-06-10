@@ -22,4 +22,5 @@ public class Vehicle {
     private int id;
     private String vehicleNumber;
     private com.spring.crud.demo.models.Vehicle.Type type;
+    private int branchId;
 }

@@ -8,11 +8,15 @@ public class Branch {
     private final String branchName;
     private final String city;
 
-    public Branch(int id, String branchName, String city) {
+    private Branch(int id, String branchName, String city) {
         validate(id, branchName, city);
         this.id = id;
         this.branchName = branchName;
         this.city = city;
+    }
+
+    public Branch(String branchName, String city) {
+        this(-1, branchName, city);
     }
 
     private void validate(int id, String branchName, String city) {

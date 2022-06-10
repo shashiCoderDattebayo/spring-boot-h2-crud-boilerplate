@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.spring.crud.demo.models.Booking;
 import com.spring.crud.demo.repository.BookingRepository;
 import com.spring.crud.demo.service.BookingService;
+import com.spring.crud.demo.service.VehicleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepository repository;
+    @Autowired
+    private VehicleService vehicleService;
 
     @Override
     public List<Booking> findAll() {
@@ -30,8 +33,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking save(Booking booking) {
-        com.spring.crud.demo.dbModels.Booking dbBooking = repository.save(booking.toDbObject());
-        return new Booking(repository.save(dbBooking));
+        vehicleService.findById(booking.getVehicleId());
+        return new Booking(repository.save(booking.toDbObject()));
     }
 
     @Override

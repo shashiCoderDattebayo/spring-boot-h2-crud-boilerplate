@@ -9,12 +9,16 @@ public class Price {
     private final int branchId;
     private final int price;
 
-    public Price(int id, Vehicle.Type type, int branchId, int price) {
+    private Price(int id, Vehicle.Type type, int branchId, int price) {
         validate(id, type, branchId, price);
         this.id = id;
         this.type = type;
         this.branchId = branchId;
         this.price = price;
+    }
+
+    public Price(Vehicle.Type type, int branchId, int price) {
+        this(-1, type, branchId, price);
     }
 
     private void validate(int id, Vehicle.Type type, int branchId, int price) {
