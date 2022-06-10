@@ -22,6 +22,6 @@ public class Booking {
     private int id;
 
     private int vehicleId;
-    private String startTime;
-    private String endTime;
+    private int startTime;
+    private int endTime;
 }

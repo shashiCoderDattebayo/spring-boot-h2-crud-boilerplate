@@ -6,10 +6,10 @@ import lombok.Getter;
 public class Booking {
     private final int id;
     private final int vehicleId;
-    private final String startTime;
-    private final String endTime;
+    private final int startTime;
+    private final int endTime;
 
-    private Booking(int id, int vehicleId, String startTime, String endTime) {
+    private Booking(int id, int vehicleId, int startTime, int endTime) {
         validate(id, vehicleId, startTime, endTime);
         this.id = id;
         this.vehicleId = vehicleId;
@@ -17,11 +17,11 @@ public class Booking {
         this.endTime = endTime;
     }
 
-    public Booking(int vehicleId, String startTime, String endTime) {
+    public Booking(int vehicleId, int startTime, int endTime) {
         this(-1, vehicleId, startTime, endTime);
     }
 
-    private void validate(int id, int vehicleId, String startTime, String endTime) {
+    private void validate(int id, int vehicleId, int startTime, int endTime) {
     }
 
     public Booking(com.spring.crud.demo.dbModels.Booking booking) {

@@ -34,6 +34,13 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking save(Booking booking) {
         vehicleService.findById(booking.getVehicleId());
+        for (Booking bookingSaved: this.findAll()) {
+            if ((bookingSaved.getStartTime() <= booking.getStartTime()) && (bookingSaved.getEndTime() > booking.getStartTime())) {
+                throw new NotFoundException("** Booking already exists :: ") ;
+            } else if((bookingSaved.getStartTime() <= booking.getEndTime()) && (bookingSaved.getEndTime() > booking.getEndTime())) {
+                throw new NotFoundException("** Booking already exists :: ") ;
+            }
+        }
         return new Booking(repository.save(booking.toDbObject()));
     }
 
